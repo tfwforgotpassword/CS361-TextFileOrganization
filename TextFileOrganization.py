@@ -18,7 +18,16 @@ while True:
                         file_list.append(f.name)
         socket.send_string(str(file_list))
         message = ""
+    if message.startswith("ListFileRelations"):
+        if len(message) < 18:
+            socket.send_string("Forgot file name")
+        else:
+            socket.send_string(message[18:])
+        message = ""
     if message.startswith("Quit"):
         socket.send_string("Server shut down")
         break
+    else:
+        socket.send_string("Invalid command")
+        message = ""
     sleep(0.5)
