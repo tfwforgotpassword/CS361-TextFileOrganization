@@ -33,7 +33,15 @@ def get_file_relations(file_name):
                 related_files.setdefault(second_file.casefold(), second_file)
             elif second_file.casefold() == file_name.casefold():
                 related_files.setdefault(first_file.casefold(), first_file)
-
+    if len(related_files) == 0:
+        file_found = False
+        for file in BASE.iterdir():
+            if file.is_file() and file.suffix.lower() == ".txt" and file.name.casefold() == file_name.casefold():
+                file_found = True
+        if not file_found:
+            return [f"Text file not found: {file_name}"]
+        else:
+            return [f"No relations for {file_name}"]
     return sorted(related_files.values(), key=str.casefold)
 
 

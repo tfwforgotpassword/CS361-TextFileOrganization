@@ -1,2 +1,5 @@
-TEXTFILES*
+NOTES
+#feel free to have your input anywhere above the relations line#
 RELATIONS*
+TextFileOrganization.txt|Example1.txt
+Example2.txt|TextFileOrganization.txt

@@ -18,7 +18,7 @@ socket.connect("tcp://localhost:5555")
 
 while True:
     print("ListFiles, ListFileRelations <filename>, MakeFileRelation <filename1> <filename2> are valid commands.")
-    string_to_send = input("Type something!")
+    string_to_send = input("Type something!\n")
 
     socket.send_string(string_to_send)
 
