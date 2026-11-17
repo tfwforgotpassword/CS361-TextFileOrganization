@@ -12,18 +12,23 @@ context = zmq.Context()
 print("Client attempting to connect to server...")
 
 socket = context.socket(zmq.REQ)
+socket.setsockopt(zmq.RCVTIMEO, 10000)
 
 socket.connect("tcp://localhost:5555")
 
 while True:
-    print(f"ListFiles, ListFileRelations, MakeFileRelation are valid commands.")
+    print("ListFiles, ListFileRelations <filename>, MakeFileRelation are valid commands.")
     string_to_send = input("Type something!")
 
     socket.send_string(string_to_send)
 
-    message = socket.recv()
-    
-    print(f"Server sent back: {message.decode()}")
-    if message.decode().endswith("Server shut down"):
+    try:
+        message = socket.recv_string()
+    except zmq.Again:
+        print("Error")
+        break
+
+    print(message)
+    if message.endswith("Server shut down"):
         print("Thank you for using DataStealer5000.")
         break
