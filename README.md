@@ -28,6 +28,6 @@ The last command simply ends the loop keeping the program running.
 Afterwards, the client should receive another string, this one either a line-separated list of file names, or a simple confirmation
 that the command was executed correctly.
 
-#UML
+# UML
 
 <img width="800" height="562" alt="image" src="https://i.imgur.com/VZL6dmp.png" />
