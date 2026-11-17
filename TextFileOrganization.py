@@ -6,8 +6,10 @@ context = zmq.Context()
 socket = context.socket(zmq.REP)
 socket.bind("tcp://*:5555")
 BASE = Path(__file__).resolve().parent
+message = 0
 while True:
-    message = socket.recv().decode()
+    if type(message) != str or message == "":
+        message = socket.recv().decode()
     sleep(0.5)
     if message.startswith("ListFiles"):
         file_list = []
@@ -19,7 +21,7 @@ while True:
         socket.send_string(str(file_list))
         message = ""
     if message.startswith("ListFileRelations"):
-        if len(message) < 18:
+        if len(message) < 19:
             socket.send_string("Forgot file name")
         else:
             socket.send_string(message[18:])
@@ -27,7 +29,7 @@ while True:
     if message.startswith("Quit"):
         socket.send_string("Server shut down")
         break
-    else:
+    elif message != "":
         socket.send_string("Invalid command")
         message = ""
     sleep(0.5)
